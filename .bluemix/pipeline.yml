@@ -3,6 +3,7 @@ defaultBaseImageVersion: '2.0'
 private_worker: ${PRIVATE_WORKER}
 stages:
 - name: BUILD
+  worker: ${PRIVATE_WORKER}
   inputs:
   - type: git
     branch: master
@@ -38,7 +39,8 @@ stages:
     enable_tests: 'true'
     test_file_pattern: 'testResult/test-*.xml'
     coverage_type: istanbul
-    coverage_directory: 'coverage/lcov-report' 
+    coverage_directory: ./tests/server/coverage/reports/lcov-report
+    coverage_file_pattern: ./tests/server/coverage/reports/coverage.json
     script: |
       #!/bin/bash
       #Invoke tests here
