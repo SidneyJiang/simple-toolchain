@@ -1,4 +1,6 @@
 ---
+defaultBaseImageVersion: '2.0'
+private_worker: ${PRIVATE_WORKER}
 stages:
 - name: BUILD
   inputs:
@@ -7,9 +9,15 @@ stages:
     service: ${SAMPLE_REPO}
   triggers:
   - type: commit
+    enabled: 'false'
   jobs:
   - name: Build
     type: builder
+    curatedDockerImage: '2.5'
+  - name: Build-Custom
+    type: builder
+    build_type: customimage
+    docker_image: 'node:12'
 - name: DEPLOY
   inputs:
   - type: job
@@ -25,6 +33,18 @@ stages:
     value: undefined
     type: text
   jobs:
+  - name: Test
+    type: tester
+    enable_tests: 'true'
+    test_file_pattern: 'testResult/test-*.xml'
+    coverage_type: istanbul
+    coverage_directory: 'coverage/lcov-report' 
+    script: |
+      #!/bin/bash
+      #Invoke tests here
+      nvm use 10.15.3
+      chmod +x ./test.sh
+      ./test.sh
   - name: Blue-Green Deploy
     type: deployer
     target:
