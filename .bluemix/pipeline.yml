@@ -1,6 +1,5 @@
 ---
 defaultBaseImageVersion: '2.0'
-private_worker: ${PRIVATE_WORKER}
 properties:
 - name: IBM_CLOUD_API_KEY
   value: ${API_KEY}
@@ -10,7 +9,6 @@ properties:
   type: text
 stages:
 - name: BUILD
-  worker: ${PRIVATE_WORKER}
   inputs:
   - type: git
     branch: master
