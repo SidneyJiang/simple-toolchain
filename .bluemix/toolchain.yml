@@ -22,10 +22,6 @@ toolchain:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
 services:
-  privateWorker:
-    service_id: private_worker
-    parameters:
-      name: private-worker
   sample-repo:
     service_id: githubpublic
     parameters:
@@ -51,8 +47,7 @@ services:
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
-          PRIVATE_WORKER: '{{services.privateWorker.parameters.name}}'
-        execute: true
+        execute: false
   webide:
     service_id: orion
 form:
